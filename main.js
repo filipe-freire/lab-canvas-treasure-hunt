@@ -39,17 +39,27 @@ class Character {
     this.row = row;
   }
   moveUp() {
-    this.row -= 50;
+    if (this.row > 0) {
+      this.row -= 50;
+    }
   }
   moveRight() {
-    this.col += 50;
+    if (this.col < 450) {
+      this.col += 50;
+    }
   }
   moveDown() {
-    this.row += 50;
+    if (this.row < 450) {
+      this.row += 50;
+    }
   }
   moveLeft() {
-    this.col -= 50;
+    if (this.col > 0) {
+      this.col -= 50;
+    }
   }
+  direction = 'down';
+  score = 0;
 }
 
 const player = new Character(0, 0);
@@ -61,9 +71,27 @@ function drawPlayer() {
   context.clearRect(0, 0, width, width);
   drawGrid();
 
-  const playerSprite = new Image();
+  let playerSprite = new Image();
   playerSprite.src = '/images/character-down.png';
 
+  switch (player.direction) {
+    case 'left':
+      playerSprite.src = '/images/character-left.png';
+      break;
+    case 'up':
+      playerSprite.src = '/images/character-up.png';
+      break;
+    case 'right':
+      playerSprite.src = '/images/character-right.png';
+      break;
+    case 'down':
+      playerSprite.src = '/images/character-down.png';
+      break;
+  }
+  /*
+  const playerSprite = new Image();
+  playerSprite.src = '/images/character-down.png';
+*/
   // do this in order to prevent the image not loading on the page
   playerSprite.addEventListener('load', () => {
     // how to keep the ration in the images
@@ -76,7 +104,7 @@ function drawPlayer() {
 }
 
 // Iteration 4
-
+console.log('hello world');
 class Treasure {
   constructor(col, row) {
     this.col = col;
@@ -128,18 +156,22 @@ window.addEventListener('keydown', event => {
   switch (event.keyCode) {
     case 37:
       console.log('left');
+      player.direction = 'left';
       player.moveLeft();
       break;
     case 38:
       console.log('up');
+      player.direction = 'up';
       player.moveUp();
       break;
     case 39:
       console.log('right');
+      player.direction = 'right';
       player.moveRight();
       break;
     case 40:
       console.log('down');
+      player.direction = 'down';
       player.moveDown();
       break;
   }
